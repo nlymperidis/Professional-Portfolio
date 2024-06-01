@@ -39,10 +39,10 @@ def contact():
 
 def send_email(info, user_id='me'):
     message = MIMEText(f'Subject: Contact from site\n\n'
-                       f'Name: {info['name']}\n'
-                       f'Email: {info['email']}\n'
+                       f'Name: {info["name"]}\n'
+                       f'Email: {info["email"]}\n'
                        f'Phone: {info["phone"] if "phone" in info else "N/A"}\n'  # Handle missing phone number
-                       f'Message: {info['message']}\n'
+                       f'Message: {info["message"]}\n'
                        )
     message['to'] = MY_EMAIL
     message['from'] = MY_EMAIL
