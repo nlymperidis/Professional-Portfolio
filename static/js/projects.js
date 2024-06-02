@@ -3,9 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Define an array of images
     const projectImages = [
-        "static/assets/img/projects/project1.jpg",
-        "static/assets/img/projects/project2.jpg",
-        "static/assets/img/projects/project3.jpg",
+        "static/assets/img/projects/billboard.jpg",
+        "static/assets/img/projects/blog-for-deployment.jpg",
+        "static/assets/img/projects/cafe-api.jpg",
+        "static/assets/img/projects/finalassignment.jpg",
+        "static/assets/img/projects/flight-deals.jpg",
+        "static/assets/img/projects/professional-portfolio.jpg",
+        "static/assets/img/projects/rain_alert.jpg",
         // Add more images here as needed
     ];
 
