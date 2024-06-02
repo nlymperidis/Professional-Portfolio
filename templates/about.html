@@ -15,12 +15,6 @@
             display: block;
             margin: 0 auto;
         }
-        .text-content {
-            padding-left: 20px; /* Adjust the value as needed */
-            padding-right: 20px; /* Adjust the value as needed */
-            margin: 0 auto; /* Center align the text content */
-            max-width: 1200px; /* Optional: Set a maximum width to prevent it from becoming too wide on large screens */
-        }
     </style>
 </head>
 
@@ -46,10 +40,10 @@
                     <a class="nav-link active text-reset stack" style="--index: 0;" href="#tools">Programming Languages & Tools</a>
                 </li>
                 <li class="nav-item stack">
-                    <a class="nav-link active text-reset stack" style="--index: 0;" href="#techskills">Technical Skills</a>
+                    <a class="nav-link active text-reset stack" style="--index: 0;" href="#lang">Languages</a>
                 </li>
                 <li class="nav-item stack">
-                    <a class="nav-link active text-reset stack" style="--index: 0;" href="#lang">Languages</a>
+                    <a class="nav-link active text-reset stack" style="--index: 0;" href="#techskills">Technical Skills</a>
                 </li>
                 <li class="nav-item stack">
                     <a class="nav-link active text-reset stack" style="--index: 0;" href="#softskills">Soft Skills and Background</a>
@@ -63,90 +57,18 @@
 
             <h2 id="whoami">Who am I</h2>
             <p>
-                I'm Nikolaos Lymperidis, an aspiring Data Analyst eager to combine domain knowledge and analytical skills to make real-world positive contributions. Skilled at leveraging data to develop actionable solutions and utilizing data mining and data visualization to create meaningful insights. Reliable and dedicated team player with a hardworking and resourceful approach. Military obligations fulfilled.
+                I'm Nikolaos Lymperidis, an aspiring Data Analyst eager to combine domain knowledge and analytical
+                skills to make real-world positive contributions. Skilled at leveraging data to develop actionable
+                solutions and utilizing data mining and data visualization to create meaningful insights. Reliable
+                and dedicated team player with a hardworking and resourceful approach. Military obligations fulfilled.
             </p>
 
             <h2 id="tools">Programming Languages & Tools</h2>
-            <p>SQL, Python/BioPython, C++, Java</p>
-            <p>Tableau, Power BI</p>
+            <ul>
+                <li>SQL, Python/BioPython, C++, Java</li>
+                <li>Tableau, Power BI</li>
+            </ul>
             <br>
-
-            <h2 id="techskills">Technical Skills</h2>
-            <section class="skills">
-                <skill>
-                    <div class="skill-wrapper">
-                      <figure>
-                        <img src="static/assets/img/programming.jpg" alt="Programming" />
-                      </figure>
-                      <div class="skill-body">
-                        <h2>Programming and Web Development:</h2>
-                            <ul class="list">
-                                <li>Python (including Django, Flask),</li>
-                                <li>Bootstrap, HTML, CSS,</li>
-                                <li>Git, GitHub,</li>
-                                <li>Postgres, MySQL, SQLite.</li>
-                            </ul>
-                      </div>
-                    </div>
-                </skill>
-
-                <skill>
-                    <div class="skill-wrapper">
-                      <figure>
-                        <img src="static/assets/img/analysis.jpg" alt="Analysis" />
-                      </figure>
-                      <div class="skill-body">
-                            <h2>Analysis and Visualization:</h2>
-                            <ul class="list">
-                              <li>Pandas, Matplotlib, NumPy</li>
-                              <li>Plotly, Seaborn</li>
-                            </ul>
-                      </div>
-                    </div>
-                </skill>
-
-                <skill>
-                    <div class="skill-wrapper">
-                        <figure>
-                            <img class="invert-colors resize-image" src="static/assets/img/version.png" alt="Version Control" />
-                        </figure>
-                        <div class="skill-body">
-                            <h2>Version Control</h2>
-                            <ul class="list">
-                                <li>Git, GitHub</li>
-                            </ul>
-                        </div>
-                    </div>
-                </skill>
-
-                <skill>
-                    <div class="skill-wrapper">
-                      <figure>
-                        <img src="static/assets/img/database.jpg" alt="Database" />
-                      </figure>
-                      <div class="skill-body">
-                            <h2>Databases</h2>
-                            <ul class="list">
-                              <li>Postgres, MySQL, SQLite</li>
-                            </ul>
-                      </div>
-                    </div>
-                </skill>
-
-                <skill>
-                    <div class="skill-wrapper">
-                      <figure>
-                        <img src="static/assets/img/web-scraping.jpg" alt="Web Scraping" />
-                      </figure>
-                      <div class="skill-body">
-                            <h2>Web Scraping and Data Parsing</h2>
-                            <ul class="list">
-                                <li>Selenium, BeautifulSoup</li>
-                            </ul>
-                      </div>
-                    </div>
-              </skill>
-            </section>
 
             <h2 id="lang">Languages</h2>
             <ul>
@@ -155,22 +77,90 @@
             </ul>
             <br>
 
+             <section id="techskills">
+                <h2>Technical Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-card">
+                        <img src="static/assets/img/programming.jpg" alt="Programming and Web Development">
+                        <h3>Programming and Web Development</h3>
+                        <ul>
+                            <li>Python (including Django, Flask)</li>
+                            <li>Bootstrap, HTML, CSS</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-card">
+                        <img src="static/assets/img/analysis.jpg" alt="Analysis and Visualization">
+                        <h3>Analysis and Visualization</h3>
+                        <ul>
+                            <li>Pandas, Matplotlib, NumPy</li>
+                            <li>Plotly, Seaborn</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-card">
+                        <img src="static/assets/img/version.png" alt="Version Control" class="invert-colors resize-image">
+                        <h3>Version Control</h3>
+                        <ul>
+                            <li>Git, GitHub</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-card">
+                        <img src="static/assets/img/database.jpg" alt="Databases">
+                        <h3>Databases</h3>
+                        <ul>
+                            <li>Postgres, MySQL, SQLite</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-card">
+                        <img src="static/assets/img/web-scraping.jpg" alt="Web Scraping and Data Parsing">
+                        <h3>Web Scraping and Data Parsing</h3>
+                        <ul>
+                            <li>Selenium, BeautifulSoup</li>
+                        </ul>
+                    </div>
+                </div>
+             </section>
+
             <h2 id="softskills">Soft Skills and Background</h2>
             <p>
-                I embarked on my academic journey in 2013 at the University of Thessaly in Lamia, Greece, where I pursued a Bachelor of Science in Computer Science and Biomedical Informatics. My passion for combining technology and healthcare drove me to excel in this field, and I successfully graduated in 2022. During my studies, I fulfilled my military obligations in November 2021 while continuing my academic pursuits. Concurrently, I also began the ASPAITE program and the Healthcare Data Science course by Workearly. After completing these, I engaged in the 100 Days of Code challenge on Udemy and attended a seminar on Clinical Pilates, aligning with my interest in fitness and well-being.
+                I embarked on my academic journey in 2013 at the University of Thessaly in Lamia, Greece, where I
+                pursued a Bachelor of Science in Computer Science and Biomedical Informatics. My passion for combining
+                technology and healthcare drove me to excel in this field, and I successfully graduated in 2022.
+                During my studies, I fulfilled my military obligations in November 2021 while continuing my academic
+                pursuits. Concurrently, I also began the ASPAITE program and the Healthcare Data Science course by
+                Workearly. After completing these, I engaged in the 100 Days of Code challenge on Udemy and attended
+                a seminar on Clinical Pilates, aligning with my interest in fitness and well-being.
             </p>
             <br>
 
             <h2 id="hobbies">Hobbies and Trivia</h2>
             <p>
-                When I'm not immersed in data analysis or exploring bioinformatics, I engage in a variety of activities that enrich my life and keep me balanced:
+                When I'm not immersed in data analysis or exploring bioinformatics, I engage
+                in a variety of activities that enrich my life and keep me balanced:
             </p>
             <ul>
-                <li><strong>Fitness and Nutrition Enthusiast</strong>: I am passionate about maintaining a healthy lifestyle, which includes both fitness and nutrition. My fitness routine involves weightlifting, running, and yoga. I also enjoy researching nutrition to optimize my diet and well-being. Recently, I attended a seminar on Clinical Pilates, enhancing my understanding of body mechanics and fitness principles.</li>
-                <li><strong>Gaming</strong>: I find relaxation in playing games, both on my phone and single-player games on my PC. These games help me unwind while enhancing my problem-solving and critical thinking abilities.</li>
-                <li><strong>Music Lover</strong>: I am particularly fond of melodic house, techno, and techno music. I enjoy attending music events and festivals where I can immerse myself in these genres and experience live performances.</li>
-                <li><strong>Culinary Explorer</strong>: I love trying new cuisines and flavors, and I have a particular fondness for sweets. Exploring different culinary delights is one of my favorite pastimes.</li>
-                <li><strong>Travel Enthusiast</strong>: I enjoy making trips to see beautiful locations and experience local cuisines. I love the sea and often seek out coastal destinations to enjoy the scenery and fresh seafood.</li>
+                <li><strong>Fitness and Nutrition Enthusiast</strong>: I am passionate about maintaining a healthy
+                    lifestyle, which includes both fitness and nutrition. My fitness routine involves weightlifting
+                    and running. I also enjoy researching nutrition to optimize my diet and well-being.
+                </li>
+                <li><strong>Gaming</strong>: I find relaxation in playing games, both on my phone and single-player
+                    games on my PC. These games help me unwind while enhancing my problem-solving and critical
+                    thinking abilities.
+                </li>
+                <li><strong>Music Lover</strong>: I am particularly fond of house and techno music.
+                    I enjoy attending music events and festivals where I can immerse myself in these genres and
+                    experience live performances.
+                </li>
+                <li><strong>Culinary Explorer</strong>: I love trying new cuisines and flavors, and I have a particular
+                    fondness for sweets. Exploring different culinary delights is one of my favorite pastimes.
+                </li>
+                <li><strong>Travel Enthusiast</strong>: I enjoy making trips to see beautiful locations and experience
+                    local cuisines. I love the sea and often seek out coastal destinations to enjoy the scenery and
+                    fresh seafood.
+                </li>
             </ul>
         </div>
     </section>
