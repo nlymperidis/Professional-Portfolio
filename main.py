@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, flash
-import oauth_local
+import oauth
 from email.mime.text import MIMEText
 import base64
 
