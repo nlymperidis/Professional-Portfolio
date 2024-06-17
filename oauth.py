@@ -55,7 +55,8 @@ def get_g_service(service="gmail", ver="v1",
                 logger.info("Credentials refreshed successfully.")
             except GoogleAuthError as e:
                 logger.error(f"Failed to refresh credentials: {e}")
-        else:
+                creds = None
+        if not creds or not creds.valid:
             try:
                 flow = InstalledAppFlow.from_client_secrets_file(SECRET_FILE, scopes)
                 creds = flow.run_local_server(port=8080)
