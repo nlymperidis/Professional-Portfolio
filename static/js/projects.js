@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "static/assets/img/projects/flight-deals.jpg",
         "static/assets/img/projects/professional-portfolio.jpg",
         "static/assets/img/projects/rain_alert.jpg",
+        "static/assets/img/projects/tic-tac-toe.png",
         // Add more images here as needed
     ];
 
