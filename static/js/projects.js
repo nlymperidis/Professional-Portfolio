@@ -1,28 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
     const projectsList = document.getElementById('projects-list');
 
-    // Define an array of images
-    const projectImages = [
-        "static/assets/img/projects/billboard.jpg",
-        "static/assets/img/projects/blog-for-deployment.jpg",
-        "static/assets/img/projects/cafe-api.jpg",
-        "static/assets/img/projects/finalassignment.jpg",
-        "static/assets/img/projects/flight-deals.jpg",
-        "static/assets/img/projects/professional-portfolio.jpg",
-        "static/assets/img/projects/rain_alert.jpg",
-        "static/assets/img/projects/tic-tac-toe.png",
-        // Add more images here as needed
-    ];
+    // Define the base path for project images and possible extensions
+    const imageBasePath = "static/assets/img/projects/";
+    const imageExtensions = ['.jpg', '.jpeg', '.png'];
+
+    // Function to construct image URL based on available extensions
+    const getImageUrl = (basePath, projectName, extensions) => {
+        for (const ext of extensions) {
+            const imageUrl = `${basePath}${projectName}${ext}`;
+            const http = new XMLHttpRequest();
+            http.open('HEAD', imageUrl, false);
+            http.send();
+            if (http.status !== 404) {
+                return imageUrl;
+            }
+        }
+        return `${basePath}default.jpg`; // Default image if no match is found
+    };
 
     // Fetch GitHub repositories
     fetch('https://api.github.com/users/nlymperidis/repos')
         .then(response => response.json())
         .then(repos => {
-            repos.forEach((repo, index) => {
+            repos.forEach(repo => {
                 const projectElement = document.createElement('div');
                 projectElement.classList.add('project-wrapper');
 
-                const imageUrl = projectImages[index % projectImages.length]; // Cycle through images
+                // Construct the image URL based on the repo name
+                const imageUrl = getImageUrl(imageBasePath, repo.name, imageExtensions);
 
                 projectElement.innerHTML = `
                     <figure>
