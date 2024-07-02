@@ -1,12 +1,18 @@
 import os
+import json
 import logging
-from google.oauth2 import service_account
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.auth.exceptions import GoogleAuthError
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+SECRET_FILE = "client_secret.json"
+TOKEN_FILE = "token.json"
 
 # Function to write environment variable content to a file
 def write_file_from_env(env_var, filename):
@@ -22,30 +28,20 @@ def write_file_from_env(env_var, filename):
     else:
         logger.warning(f"Environment variable {env_var} not found or empty")
 
-SERVICE_ACCOUNT_FILE = "service_account.json"
+# Write the client secret file from the environment variable
+write_file_from_env('CLIENT_SECRET_JSON', SECRET_FILE)
 
-# Write the service account file from the environment variable
-write_file_from_env('SERVICE_ACCOUNT_JSON', SERVICE_ACCOUNT_FILE)
-
-def get_g_service(service="gmail", version="v1",
+def get_g_service(service="gmail", ver="v1",
                   scopes=['https://www.googleapis.com/auth/gmail.readonly',
                           'https://www.googleapis.com/auth/gmail.send']):
-    try:
-        # Load service account credentials
-        creds = service_account.Credentials.from_service_account_file(
-            SERVICE_ACCOUNT_FILE, scopes=scopes)
-        logger.info("Service account credentials loaded successfully.")
-    except GoogleAuthError as e:
-        logger.error(f"Failed to load service account credentials: {e}")
-        raise
+    creds = None
 
-    return build(service, version, credentials=creds)
+    # Write the token file from the environment variable if it exists
+    write_file_from_env('TOKEN_JSON', TOKEN_FILE)
 
-# Example usage
-if __name__ == "__main__":
-    try:
-        service = get_g_service()
-        logger.info("Google API service created successfully.")
-        # Use the service object for further API calls
-    except Exception as e:
-        logger.error(f"Failed to create Google API service: {e}")
+    # Load existing credentials from the token file if it exists
+    if os.path.exists(TOKEN_FILE):
+        try:
+            with open(TOKEN_FILE, 'r') as token_file:
+                logger.info(f"Loading credentials from {TOKEN_FILE}")
+                creds = Credentials.from_authorized_user_file(T
