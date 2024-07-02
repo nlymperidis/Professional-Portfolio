@@ -44,4 +44,46 @@ def get_g_service(service="gmail", ver="v1",
         try:
             with open(TOKEN_FILE, 'r') as token_file:
                 logger.info(f"Loading credentials from {TOKEN_FILE}")
-                creds = Credentials.from_authorized_user_file(T
+                creds = Credentials.from_authorized_user_file(TOKEN_FILE, scopes)
+            logger.info("Credentials loaded successfully from token file.")
+        except (GoogleAuthError, json.JSONDecodeError) as e:
+            logger.error(f"Failed to load credentials from token file: {e}")
+            creds = None
+
+    # If no valid credentials are found, initiate the authorization flow
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            try:
+                creds.refresh(Request())
+                logger.info("Credentials refreshed successfully.")
+            except GoogleAuthError as e:
+                logger.error(f"Failed to refresh credentials: {e}")
+                creds = None
+        if not creds or not creds.valid:
+            try:
+                flow = InstalledAppFlow.from_client_secrets_file(SECRET_FILE, scopes)
+                creds = flow.run_local_server(port=8080)
+                logger.info("New credentials obtained via local server.")
+            except (GoogleAuthError, FileNotFoundError) as e:
+                logger.error(f"Failed to obtain new credentials: {e}")
+                raise
+
+        # Save the new credentials for future use
+        try:
+            with open(TOKEN_FILE, 'w') as token:
+                token.write(creds.to_json())
+            logger.info("New credentials saved to token file.")
+        except IOError as e:
+            logger.error(f"Failed to save new credentials: {e}")
+
+    return build(service, ver, credentials=creds)
+
+# Example usage
+if __name__ == "__main__":
+    try:
+        service = get_g_service()
+        logger.info("Google API service created successfully.")
+        # Use the `service` object to interact with Google APIs
+        # For example, service.users().messages().list(userId='me').execute()
+    except Exception as e:
+        logger.error(f"Failed to create Google API service: {e}")
