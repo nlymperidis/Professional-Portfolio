@@ -1,9 +1,6 @@
 import os
-import json
 import logging
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from google.auth.exceptions import GoogleAuthError
 
@@ -16,8 +13,7 @@ def write_file_from_env(env_var, filename):
     file_content = os.getenv(env_var)
     if file_content:
         try:
-            # Log the first 100 characters to check the content
-            logger.info(f"Writing to {filename} from environment variable {env_var}: {file_content[:100]}...")
+            logger.info(f"Writing to {filename} from environment variable {env_var}")
             with open(filename, 'w') as file:
                 file.write(file_content)
             logger.info(f"{filename} written from environment variable {env_var}")
@@ -26,65 +22,30 @@ def write_file_from_env(env_var, filename):
     else:
         logger.warning(f"Environment variable {env_var} not found or empty")
 
-SECRET_FILE = "client_secret.json"
-TOKEN_FILE = "token.json"
+SERVICE_ACCOUNT_FILE = "service_account.json"
 
-# Write the client secret file from the environment variable
-write_file_from_env('CLIENT_SECRET_JSON', SECRET_FILE)
+# Write the service account file from the environment variable
+write_file_from_env('SERVICE_ACCOUNT_JSON', SERVICE_ACCOUNT_FILE)
 
-def get_g_service(service="gmail", ver="v1",
+def get_g_service(service="gmail", version="v1",
                   scopes=['https://www.googleapis.com/auth/gmail.readonly',
                           'https://www.googleapis.com/auth/gmail.send']):
-    creds = None
+    try:
+        # Load service account credentials
+        creds = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE, scopes=scopes)
+        logger.info("Service account credentials loaded successfully.")
+    except GoogleAuthError as e:
+        logger.error(f"Failed to load service account credentials: {e}")
+        raise
 
-    # Write the token file from the environment variable if it exists
-    write_file_from_env('TOKEN_JSON', TOKEN_FILE)
-
-    # Load existing credentials from the token file if it exists
-    if os.path.exists(TOKEN_FILE):
-        try:
-            with open(TOKEN_FILE, 'r') as token_file:
-                logger.info(f"Loading credentials from {TOKEN_FILE}")
-                creds = Credentials.from_authorized_user_file(TOKEN_FILE, scopes)
-            logger.info("Credentials loaded successfully from token file.")
-        except (GoogleAuthError, json.JSONDecodeError) as e:
-            logger.error(f"Failed to load credentials from token file: {e}")
-            creds = None
-
-    # If no valid credentials are found, initiate the authorization flow
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            try:
-                creds.refresh(Request())
-                logger.info("Credentials refreshed successfully.")
-            except GoogleAuthError as e:
-                logger.error(f"Failed to refresh credentials: {e}")
-                creds = None
-        if not creds or not creds.valid:
-            try:
-                flow = InstalledAppFlow.from_client_secrets_file(SECRET_FILE, scopes)
-                creds = flow.run_local_server(port=8080)
-                logger.info("New credentials obtained via local server.")
-            except (GoogleAuthError, FileNotFoundError) as e:
-                logger.error(f"Failed to obtain new credentials: {e}")
-                raise
-
-        # Save the new credentials for future use
-        try:
-            with open(TOKEN_FILE, 'w') as token:
-                token.write(creds.to_json())
-            # Optionally update the environment variable with the new token
-            os.environ['TOKEN_JSON'] = creds.to_json()
-            logger.info("New credentials saved to token file.")
-        except IOError as e:
-            logger.error(f"Failed to save new credentials: {e}")
-
-    return build(service, ver, credentials=creds)
+    return build(service, version, credentials=creds)
 
 # Example usage
 if __name__ == "__main__":
     try:
         service = get_g_service()
         logger.info("Google API service created successfully.")
+        # Use the service object for further API calls
     except Exception as e:
         logger.error(f"Failed to create Google API service: {e}")
