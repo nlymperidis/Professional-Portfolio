@@ -16,13 +16,15 @@ def write_file_from_env(env_var, filename):
     file_content = os.getenv(env_var)
     if file_content:
         try:
+            # Log the first 100 characters to check the content
+            logger.info(f"Writing to {filename} from environment variable {env_var}: {file_content[:100]}...")
             with open(filename, 'w') as file:
                 file.write(file_content)
             logger.info(f"{filename} written from environment variable {env_var}")
         except IOError as e:
             logger.error(f"Failed to write {filename}: {e}")
     else:
-        logger.warning(f"Environment variable {env_var} not found")
+        logger.warning(f"Environment variable {env_var} not found or empty")
 
 SECRET_FILE = "client_secret.json"
 TOKEN_FILE = "token.json"
@@ -41,9 +43,11 @@ def get_g_service(service="gmail", ver="v1",
     # Load existing credentials from the token file if it exists
     if os.path.exists(TOKEN_FILE):
         try:
-            creds = Credentials.from_authorized_user_file(TOKEN_FILE, scopes)
+            with open(TOKEN_FILE, 'r') as token_file:
+                logger.info(f"Loading credentials from {TOKEN_FILE}")
+                creds = Credentials.from_authorized_user_file(TOKEN_FILE, scopes)
             logger.info("Credentials loaded successfully from token file.")
-        except GoogleAuthError as e:
+        except (GoogleAuthError, json.JSONDecodeError) as e:
             logger.error(f"Failed to load credentials from token file: {e}")
             creds = None
 
